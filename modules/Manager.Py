@@ -33,14 +33,9 @@ class Manager:
 
     """Returns index of card's index by position"""
     def getCardIndexByPos(self, pos: tuple[float, float]) -> int:
-        counter = 0
-        
-        for cardRect in self.cardsRects:
+        for cardRectIndex, cardRect in enumerate(self.cardsRects):
             if cardRect.collidepoint(pos):
-                return counter
-            
-            counter += 1
-
+                return cardRectIndex
         return None
 
 
@@ -68,6 +63,13 @@ class Manager:
         self.dragPosY = cardRect.y - mouseY
 
 
+    """Sets position for dragged element"""
+    def setDraggingPos(self, pos: tuple[float, float]) -> None:
+        mouseX, mouseY = pos
+        self.dragPosX = mouseX
+        self.dragPosY = mouseY
+
+
     """ Handles everything related to clicks"""
     def handleClick(self, pos, board) -> None:
         if self.dragging != None: # If dragging something and clicked
@@ -93,9 +95,8 @@ class Manager:
         offsetX = self.managerRect.x + 10
         offsetY = self.managerRect.y + (self.managerRect.height - self.cardHeight) // 2
         
-        counter = 0
-        for id in self.cards:
-            cardX = offsetX + counter * (self.cardWidth + self.gap)
+        for idIndex, id in enumerate(self.cards):
+            cardX = offsetX + idIndex * (self.cardWidth + self.gap)
             cardY = offsetY
             
             cardRect = pygame.Rect(cardX, cardY, self.cardWidth, self.cardHeight)
@@ -105,7 +106,6 @@ class Manager:
             color = plant["color"]
             pygame.draw.rect(screen, pygame.Color(color), cardRect)
             pygame.draw.rect(screen, pygame.Color("#000000"), cardRect, 2)
-            counter += 1
 
 
     """ Render moving rectangle """

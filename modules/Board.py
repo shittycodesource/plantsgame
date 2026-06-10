@@ -11,6 +11,8 @@ class Board:
         self.width = width
         self.height = height
         self.board = [ [0] * width for _ in range(height) ]
+        self.boardRects = [ [0] * width for _ in range(height) ]
+
 
         self.cellSize = 70
 
@@ -40,9 +42,38 @@ class Board:
         else:              return plantsMap[cellValue]["color"], 0 # Not Empty
 
 
+    """ Return true if current position is over board """
+    # def isHover(self, pos) -> bool:
+    #     mouse_x, mouse_y = pos
+
+    #     if (self.left < mouse_x) and (self.top < mouse_y):
+    #         column = (mouse_x - self.left) // self.cellSize
+    #         row    = (mouse_y - self.top)  // self.cellSize
+
+    #         if (row < self.height) and (column < self.width):
+    #             return True
+    #     return False
+    """ there has to be a way to optimize this shit but i dont know"""
+    """ this one is actually useless cause getCellIndexes does the same but returns two None or two int"""
+
+
+    def handleHover(self, pos, dragging: int) -> None:
+        column, row = self.getCellIndexes(pos)
+
+        if (column != None) and (row != None) and (self.board[row][column] == 0):
+            rect = self.boardRects[row][column]
+
+            hover_surface = pygame.Surface((rect.width, rect.height))
+            hover_surface.fill(pygame.Color(plantsMap[dragging + 1]["color"]))
+            hover_surface.set_alpha(90)
+
+            screenSurface = pygame.display.get_surface()
+            screenSurface.blit(hover_surface, (rect.x, rect.y))
+
+
     """Not Used at the moment"""
     def onClick(self, column: int, row: int):
-        if x != None and y != None:
+        if column != None and row != None:
             pass
             # self.board[y][x] = not self.board[y][x]
 
@@ -70,6 +101,8 @@ class Board:
                     (j * self.cellSize) + self.top, 
                     self.cellSize, self.cellSize
                 )
+
+                self.boardRects[j][i] = cellRect
 
                 color, border = self.getCellStyle(i, j)
                 pygame.draw.rect(screen, pygame.Color(color), cellRect, border)

@@ -12,6 +12,12 @@ board = Board(8, 5)
 manager = Manager()
 
 while True:
+
+    screen.fill((0, 0, 0))
+    board.render(screen)
+    manager.render(screen)
+
+    # Events Loops
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
@@ -24,13 +30,13 @@ while True:
 
         if event.type == pygame.MOUSEMOTION:
             if manager.dragging != None:
-                mouseX, mouseY = event.pos
-                manager.dragPosX = mouseX
-                manager.dragPosY = mouseY
+                manager.setDraggingPos(event.pos)
 
-    screen.fill((0, 0, 0))
-    
-    board.render(screen)
-    manager.render(screen)
+
+    # Handle board hover effect while dragging
+    mousePos = pygame.mouse.get_pos()
+    if manager.dragging != None:
+        board.handleHover(mousePos, manager.dragging)
+
 
     pygame.display.flip()
