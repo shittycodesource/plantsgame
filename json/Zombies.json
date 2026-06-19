@@ -1,0 +1,18 @@
+{
+    "Basic": {
+        "health": 270,
+        "weight": 4000,
+        "speed": 10,
+        "can_change_lane": false,
+        "images": [
+            "Zombie/1.png",
+            "Zombie/2.png",
+            "Zombie/3.png",
+            "Zombie/4.png",
+            "Zombie/5.png",
+            "Zombie/6.png",
+            "Zombie/7.png",
+            "Zombie/8.png"
+        ]
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "startSun": 75,
+    "isNight": false,
+    "isFog": false,
+    "background": "lawn.png",
+    "music": "usual.ogg",
+    "tip": "Collect sun and place even more new plants. Level 2",
+    "unlocks": {
+        "level": null,
+        "plant": null
+    },
+    "customSelectPlants": false,
+    "availablePlants": [ 1, 2, 3 ],
+    "waveCount": 3,
+    "waves": [
+        {
+            "waveNum": 1,
+            "zombies": [ "basic", "basic", "basic", "basic", "basic", "basic", "basic" ],
+            "hasFlag": false,
+            "isFinal": false
+        },
+        {
+            "waveNum": 2,
+            "zombies": [ "basic", "basic", "basic", "basic", "basic", "basic", "basic", "basic", "basic" ],
+            "hasFlag": false,
+            "isFinal": false
+        },
+        {
+            "waveNum": 3,
+            "zombies": [ "basic", "basic", "basic", "basic", "basic", "basic", "basic", "basic", "basic", "basic", "basic" ],
+            "hasFlag": true,
+            "isFinal": true
+        }
+    ]
+}

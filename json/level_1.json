@@ -1,0 +1,47 @@
+{
+    "start_sun": 50000,
+    "is_night": false,
+    "is_fog": false,
+    "background": "lawn.png",
+    "music": "usual.ogg",
+    "tip": "Collect sun and place new plants",
+    "unlocks": {
+        "level": 2,
+        "plant": 3
+    },
+    "custom_select_plants": true,
+    "available_plants": [ "Peashooter" ],
+    "wave_count": 5,
+    "waves": [
+        {
+            "wave_num": 1,
+            "zombies": [ "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic" ],
+            "has_flag": false,
+            "is_final": false
+        },
+        {
+            "wave_num": 2,
+            "zombies": [ "Basic", "Basic", "Basic", "Basic", "Basic" ],
+            "has_flag": false,
+            "is_final": false
+        },
+        {
+            "wave_num": 3,
+            "zombies": [ "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic" ],
+            "has_flag": true,
+            "is_final": false
+        },
+        {
+            "wave_num": 4,
+            "zombies": [ "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic" ],
+            "has_flag": false,
+            "is_final": false
+        },
+        {
+            "wave_num": 5,
+            "zombies": [ "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic" ],
+            "has_flag": true,
+            "is_final": true
+        }
+    ]
+}
