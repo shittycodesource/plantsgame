@@ -30,8 +30,9 @@ class Level:
 
         self.display_surface = pygame.display.get_surface()
 
-        self.sprites = SpriteInteractive(self)
         self.zombies = ZombiesGroup(self)
+        self.visual_group = SpriteInteractive(self) # some interactive sprites in background
+
 
         self.board = Board(8, 5, self)
         self.seeds_bank = SeedsBank(self)
@@ -127,7 +128,6 @@ class Level:
 
 
 
-
     def on_mouse_move(self, pos):
         if self.seeds_bank.current_dragging != None:
             self.board.handle_hover(pos, self.seeds_bank.current_dragging)
@@ -144,8 +144,11 @@ class Level:
 
 
     def update(self, pos):
-        self.sprites.update()
+        self.visual_group.update()
+        
+        self.board.update()
         self.zombies.update(pos, self.board)
+        
         self.seeds_bank.update()
 
         self.update_wave_timer()
@@ -153,10 +156,14 @@ class Level:
 
     def render(self):
         self.display_surface.blit(self.background, self.background_rect)
+        
         self.board.render()
-        self.sprites.draw()
         self.zombies.draw()
-        # self.all_sprites.draw()
+
+        self.board.render_overlay()
+
+        self.visual_group.draw()
+        
         self.seeds_bank.render()
 
         debug(f'Level Data: ')

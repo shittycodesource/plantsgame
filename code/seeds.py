@@ -111,7 +111,7 @@ class SeedsBank:
             self.drag_pos_y = rectangle.y + self.card_half_height
 
             cls = eval(plant)
-            self.dragging_class = cls(self.dragging_group)
+            self.dragging_class = cls(self.dragging_group, [], interact=False)
             self.current_dragging = (index, plant, rectangle, self.dragging_class)
         # else:
         #     self.jiggle_animation(index)

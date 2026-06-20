@@ -20,7 +20,9 @@ class Board:
 
         self.board      = [ [0] * width for _ in range(height) ]
         self.rectangles = [ [0] * width for _ in range(height) ]
-        self.plants     = SpriteInteractive(level)
+
+        self.zombie_collision_group    = SpriteInteractive(level)
+        self.zombie_no_collision_group = SpriteInteractive(level)
 
         self.cell_size = BOARD_CELL_SIZE
 
@@ -35,11 +37,14 @@ class Board:
 
     def get_cell_indexes(self, pos):
         mouse_x, mouse_y = pos
-        if (self.left < mouse_x) and (self.top < mouse_y):
+
+        if (self.left <= mouse_x) and (self.top <= mouse_y):
             column = (mouse_x - self.left) // self.cell_size
             row = (mouse_y - self.top) // self.cell_size
+            
             if (row < self.height) and (column < self.width):
                 return column, row
+
         return None, None
     
     
@@ -67,7 +72,8 @@ class Board:
 
 
     def on_click(self, pos, current_dragging=None):
-        self.plants.on_click(pos)
+        self.zombie_collision_group.on_click(pos)
+        self.zombie_no_collision_group.on_click(pos)
 
         if current_dragging != None:
             mouse_x, mouse_y = pos
@@ -81,11 +87,13 @@ class Board:
         return False
 
 
+    # SPAWNING AND INITIALIZING NEW CLASSES HERE
     def place_plant(self, column, row, current_dragging):
         rect = self.get_plant_rect(row, column)
         plant_name = current_dragging[1]
+
         cls = eval(plant_name)
-        cls(self.plants, rect.x, rect.y)
+        cls(self.zombie_collision_group, self.zombie_no_collision_group, True, rect.x, rect.y)
 
         self.board[row][column] = current_dragging[1] # set name of the plant
         self.showcase_image = None
@@ -95,7 +103,8 @@ class Board:
 
 
     def update(self):
-        pass
+        self.zombie_collision_group.update()
+        self.zombie_no_collision_group.update()
 
 
     def render(self):
@@ -113,5 +122,8 @@ class Board:
         if self.showcase_image != None and self.showcase_image_rect != None:
             self.display_surface.blit(self.showcase_image, self.showcase_image_rect)
 
-        self.plants.update()
-        self.plants.draw()
+        self.zombie_collision_group.draw()
+
+
+    def render_overlay(self):
+        self.zombie_no_collision_group.draw()

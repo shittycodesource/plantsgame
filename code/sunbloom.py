@@ -8,10 +8,12 @@ from plant import Plant
 from sun import *
 
 class Sunbloom(Plant):
-    def __init__(self, group, pos_x=0, pos_y=0):
-        super().__init__('Sunbloom', group)
+    def __init__(self, collidable_group, not_colliadble_group, interact=True, pos_x=0, pos_y=0):
+        super().__init__('Sunbloom', collidable_group)
 
-        self.group = group
+        self.group = collidable_group
+        self.sun_group = not_colliadble_group
+        self.interact = interact
 
         self.start_time = time.time()
         self.update_time = 0.0
@@ -51,17 +53,20 @@ class Sunbloom(Plant):
 
 
     def lighten(self):
-        if self.current_state == "Plain":
-            if self.spawned_sun != None: self.spawned_sun.kill()
+        if (self.interact):
+            if self.current_state == "Plain":
+                if self.spawned_sun != None: 
+                    self.spawned_sun.kill()
+                    self.sun_group.empty()
+                
+                self.current_state = "Lighten"
+                self.reset_interval = 1
+                self.spawned_sun = Sun(self.sun_group, 25, self.rect.x + randint(-10, 100), self.rect.y + (self.height // 2) + randint(-5, 5))
+            else:
+                self.reset_interval = uniform(15.0, 24.0)
+                self.current_state = "Plain"
 
-            self.current_state = "Lighten"
-            self.reset_interval = 1
-            self.spawned_sun = Sun(self.group, 25, self.rect.x + randint(-10, 100), self.rect.y + (self.height // 2) + randint(-5, 5))
-        else:
-            self.reset_interval = uniform(15.0, 24.0)
-            self.current_state = "Plain"
-
-        self.sprites_order = self.sprites_orders[self.current_state]
+            self.sprites_order = self.sprites_orders[self.current_state]
 
 
     def on_click(self, pos):

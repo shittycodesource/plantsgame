@@ -4,9 +4,9 @@ from plant import Plant
 import time
 
 class Wallnut(Plant):
-    def __init__(self, group, pos_x = 0, pos_y = 0):
-        super().__init__('Wallnut', group)
-        
+    def __init__(self, collidable_group, not_colliadble_group, interact=True, pos_x = 0, pos_y = 0):
+        super().__init__('Wallnut', collidable_group)
+
         self.frames_per_second = 1
         self.frame_start_time = time.time()
         self.frame_update_time = 0
@@ -24,6 +24,7 @@ class Wallnut(Plant):
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
         self.rect = self.image.get_rect()
+        self.hitbox = self.rect
 
         self.resize_rect(pos_x, pos_y)
         self.resize_all_sprites()

@@ -91,16 +91,22 @@ class Walker(pygame.sprite.Sprite):
         dummy_sprite = pygame.sprite.Sprite()
         dummy_sprite.rect = self.hitbox
 
-        collided_sprite = pygame.sprite.spritecollideany(dummy_sprite, board.plants)
+        collided_sprite = pygame.sprite.spritecollideany(dummy_sprite, board.zombie_collision_group)
+
         if collided_sprite:
             self.speed = 0
             # print(f'collided: {collided_sprite.rect.y} {collided_sprite.rect.height} {int(self.hitbox.y)}')
+           
             column, row = board.get_cell_indexes(collided_sprite.rect.topleft)
+            # pygame.draw.rect(self.display_surface, (255, 0, 0), (collided_sprite.rect.x, collided_sprite.rect.y, 50, 50))
+            # 592, 172
             if column != None and row != None:
                 self.attack(pos, board, column, row, collided_sprite)
             else:
-                print("WHAT THE FUCk????") # this should not happen at all
+                print("WHAT THE FUCk????", collided_sprite.rect.topleft, column, row) # this should not happen at all
                 # if it happened it is certified what the fuck moment
+
+                pygame.draw
         else:
             if self.current_sprite != 3 and self.current_sprite != 7 and self.current_sprite != 0:
                 self.speed = self.data['speed']

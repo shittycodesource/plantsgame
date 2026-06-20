@@ -4,9 +4,13 @@ from plant import Plant
 import time
 
 class Peashooter(Plant):
-    def __init__(self, group, pos_x = 0, pos_y = 0):
-        super().__init__('Peashooter', group)
+    def __init__(self, collidable_group, not_collidable_group, interact=True, pos_x = 0, pos_y = 0):
+        super().__init__('Peashooter', collidable_group)
         
+        self.group = collidable_group
+        self.pea_group = not_collidable_group
+        self.interact = interact
+
         self.frames_per_second = 3
         self.frame_start_time = time.time()
         self.frame_update_time = 0
