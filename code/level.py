@@ -73,7 +73,7 @@ class Level:
             return loaded['available_plants']
         else:
             # Make custom selection
-            return [ "Sunbloom", "Peashooter", "Wallnut" ]
+            return [ "Sunbloom", "Peashooter", "Wallnut", "Susnut", "Sus" ]
 
 
     def prepare_waves_data(self):

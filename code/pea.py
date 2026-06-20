@@ -1,12 +1,16 @@
 import pygame
 import globalvariables
 
+from projectileshadow import ProjectileShadow
+
 class Projectile(pygame.sprite.Sprite):
 
-    def __init__(self, name, group, pos_x = 0, pos_y = 0):
+    def __init__(self, name, group, shadow_group, pos_x = 0, pos_y = 0):
         super().__init__(group)
 
+        self.name = name
         self.group = group
+        self.shadow_group = shadow_group
         self.data = globalvariables.global_projectiles_data[name]
 
         self.width = self.data['width']
@@ -28,8 +32,10 @@ class Projectile(pygame.sprite.Sprite):
 
         self.type = 'Projectile'
 
-        self.resize_all_sprites()
+        self.shadow = None
 
+        self.resize_all_sprites()
+        # self.setup_shadow()
 
     def resize_all_sprites(self):
         for i, sprite in enumerate(self.sprites):
@@ -40,6 +46,17 @@ class Projectile(pygame.sprite.Sprite):
         self.rect.width = self.width
         self.rect.height = self.height
 
+            
+    def setup_shadow(self):
+        self.shadow = ProjectileShadow(self.name, self.shadow_group, self.rect.x, self.rect.y, self.width, self.height)
+
+    def update_shadow(self):
+        self.shadow.rect.x = self.rect.x + self.data['shadow']['offset_x']
+        self.shadow.rect.y = self.rect.y + self.data['shadow']['offset_y']
+
+    def kill(self):
+        self.shadow.kill()
+        super().kill()
 
     def move(self):
         dt = globalvariables.dt        
@@ -55,12 +72,14 @@ class Projectile(pygame.sprite.Sprite):
 
     def update(self, level):
         self.move()
+        self.update_shadow()
 
     def draw_debug_boxes(self):
         pygame.draw.rect(pygame.display.get_surface(), 'Black', self.hitbox, 2)
 
 
 class Pea(Projectile):
-    def __init__(self, group, pos_x, pos_y):
-        super().__init__("Pea", group, pos_x, pos_y)
+    def __init__(self, group, shadow_group, pos_x, pos_y):
+        super().__init__("Pea", group, shadow_group, pos_x, pos_y)
         self.group = group
+        self.setup_shadow()

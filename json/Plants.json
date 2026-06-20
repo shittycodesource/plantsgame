@@ -51,5 +51,33 @@
             "width_extend": 10,
             "height_extend": 10
         }
+    },
+    "Susnut": {
+        "health": 250,
+        "cost": 25,
+        "images": [
+            "Susnut.png"
+        ],
+        "shadow": {
+            "path": "Wallnut_shadow.png",
+            "offset_x": -5,
+            "offset_y": -16,
+            "width_extend": 10,
+            "height_extend": 10
+        }
+    },
+    "Sus": {
+        "health": 150,
+        "cost": 2000,
+        "images": [
+            "Sus.png"
+        ],
+        "shadow": {
+            "path": "Wallnut_shadow.png",
+            "offset_x": 0,
+            "offset_y": -4,
+            "width_extend": 10,
+            "height_extend": 10
+        }
     }
 }

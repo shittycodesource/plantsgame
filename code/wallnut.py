@@ -3,9 +3,9 @@ from globalvariables import *
 from plant import Plant
 import time
 
-class Wallnut(Plant):
-    def __init__(self, collision_group, shadow_group, projectile_group, overlay_group, interact=True, pos_x = 0, pos_y = 0):
-        super().__init__('Wallnut', collision_group, shadow_group)
+class Basenut(Plant):
+    def __init__(self, name, collision_group, shadow_group, projectile_group, overlay_group, interact=True, pos_x = 0, pos_y = 0):
+        super().__init__(name, collision_group, shadow_group)
 
         self.shadow_group = shadow_group
 
@@ -42,3 +42,39 @@ class Wallnut(Plant):
             self.frame_update_time = time.time()
 
         self.image = self.sprites[self.sprites_order[self.current_sprite]]
+
+
+class Wallnut(Basenut):
+    def __init__(self, collision_group, shadow_group, projectile_group, overlay_group, interact=True, pos_x = 0, pos_y = 0):
+        super().__init__('Wallnut', collision_group, shadow_group, projectile_group, overlay_group, interact=True, pos_x = 0, pos_y = 0)
+        self.resize_rect(pos_x, pos_y)
+        self.resize_all_sprites()
+        self.setup_shadow()
+
+class Susnut(Basenut):
+    def __init__(self, collision_group, shadow_group, projectile_group, overlay_group, interact=True, pos_x = 0, pos_y = 0):
+        super().__init__('Susnut', collision_group, shadow_group, projectile_group, overlay_group, interact=True, pos_x = 0, pos_y = 0)
+
+        self.sprites = [ pygame.image.load(f'../assets/Susnut/Susnut.png').convert_alpha() ]
+        self.sprites_orders = { "Plain": [ 0 ] }
+        self.current_state = "Plain"
+        self.sprites_order = self.sprites_orders[self.current_state]
+        self.current_sprite = 0
+
+        self.resize_rect(pos_x, pos_y)
+        self.resize_all_sprites()
+        self.setup_shadow()
+
+class Sus(Basenut):
+    def __init__(self, collision_group, shadow_group, projectile_group, overlay_group, interact=True, pos_x = 0, pos_y = 0):
+        super().__init__('Sus', collision_group, shadow_group, projectile_group, overlay_group, interact=True, pos_x = 0, pos_y = 0)
+
+        self.sprites = [ pygame.image.load(f'../assets/Sus/Sus.png').convert_alpha() ]
+        self.sprites_orders = { "Plain": [ 0 ] }
+        self.current_state = "Plain"
+        self.sprites_order = self.sprites_orders[self.current_state]
+        self.current_sprite = 0
+
+        self.resize_rect(pos_x, pos_y)
+        self.resize_all_sprites()
+        self.setup_shadow()

@@ -6,7 +6,7 @@ from group import SpriteInteractive, ShadowGroup
 
 from sunbloom import Sunbloom
 from peashooter import Peashooter
-from wallnut import Wallnut
+from wallnut import Wallnut, Susnut, Sus
 
 
 class Board:

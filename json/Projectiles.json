@@ -6,6 +6,13 @@
         "height": 24,
         "images": [
             "Pea.png"
-        ]
+        ],
+        "shadow": {
+            "path": "Shadows/Pea_shadow.png",
+            "offset_x": -12,
+            "offset_y": 38,
+            "width_extend": 0,
+            "height_extend": -16
+        }
     }
 }

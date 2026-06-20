@@ -65,11 +65,10 @@ class Peashooter(Plant):
     def shoot(self):
         if self.interact:
             if self.is_seeing_zombies == True:
-                pea = Pea(
-                    self.pea_group, 
-                    self.rect.x + self.width - PEA_CELL_RIGHT_OFFSET, 
-                    self.rect.y + PEA_CELL_TOP_OFFSET + (3 * (self.current_sprite % 3))
-                )
+                pos_x = self.rect.x + self.width - PEA_CELL_RIGHT_OFFSET
+                pos_y = self.rect.y + PEA_CELL_TOP_OFFSET + (3 * (self.current_sprite % 3))
+                
+                pea = Pea(self.pea_group, self.shadow_group, pos_x, pos_y)
 
 
     def update(self, level):

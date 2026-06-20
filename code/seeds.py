@@ -5,7 +5,7 @@ from utils import set_timeout
 
 from sunbloom import Sunbloom
 from peashooter import Peashooter
-from wallnut import Wallnut
+from wallnut import Wallnut, Susnut, Sus
 
 balance_font = pygame.font.Font('../assets/Tiny5.ttf', 40)
 price_card_font = pygame.font.Font('../assets/Tiny5.ttf', 30)
@@ -42,7 +42,9 @@ class SeedsBank:
         self.cards_sprites = {
             "Sunbloom":   pygame.image.load('../assets/cards/Sunbloom.png').convert_alpha(),
             "Peashooter": pygame.image.load('../assets/cards/Peashooter.png').convert_alpha(),
-            "Wallnut":    pygame.image.load('../assets/cards/Wallnut.png').convert_alpha()
+            "Wallnut":    pygame.image.load('../assets/cards/Wallnut.png').convert_alpha(),
+            "Susnut":    pygame.image.load('../assets/cards/Susnut.png').convert_alpha(),
+            "Sus":    pygame.image.load('../assets/cards/Sus.png').convert_alpha()
         }
 
         self.cards_rectangles = [ None for i in range(len(self.cards_sprites)) ]
