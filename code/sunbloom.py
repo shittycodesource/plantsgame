@@ -8,10 +8,11 @@ from plant import Plant
 from sun import *
 
 class Sunbloom(Plant):
-    def __init__(self, collision_group, projectile_group, overlay_group, interact=True, pos_x=0, pos_y=0):
-        super().__init__('Sunbloom', collision_group)
+    def __init__(self, collision_group, shadow_group, projectile_group, overlay_group, interact=True, pos_x=0, pos_y=0):
+        super().__init__('Sunbloom', collision_group, shadow_group)
 
         self.group = collision_group
+        self.shadow_group = shadow_group
         self.sun_group = overlay_group
         self.interact = interact
 
@@ -48,6 +49,7 @@ class Sunbloom(Plant):
 
         self.resize_rect(pos_x, pos_y)
         self.resize_all_sprites()
+        self.setup_shadow()
         
         self.spawned_sun = None
 

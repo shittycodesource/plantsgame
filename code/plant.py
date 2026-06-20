@@ -2,11 +2,17 @@ import pygame
 from globalvariables import * # import global_plants_data
 from settings import * # import constants
 
+from plantshadow import PlantShadow
+
 class Plant(pygame.sprite.Sprite):
-    def __init__(self, name, group):
+
+    def __init__(self, name, group, shadow_group):
         super().__init__(group)
         global global_plants_data
 
+        self.shadow_group = shadow_group
+
+        self.name = name
         self.data = global_plants_data[name]
         self.health = self.data['health']
         self.width = PLANT_WIDTH
@@ -15,8 +21,16 @@ class Plant(pygame.sprite.Sprite):
         self.sprites = []
         self.current_sprite = 0
         self.image = pygame.image.load(f'../assets/wallnut/sus.png')
+
+        self.shadow = None
+
+    def kill(self):
+        self.shadow.kill()
+        super().kill()
         
-        
+    def setup_shadow(self):
+        self.shadow = PlantShadow(self.name, self.shadow_group, self.rect.x, self.rect.y, self.width, self.height)
+
     def resize_rect(self, pos_x = 0, pos_y = 0):
         self.rect.topleft = [ pos_x, pos_y ]
         self.rect.width = self.width

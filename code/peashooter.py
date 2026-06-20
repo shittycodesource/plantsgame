@@ -9,10 +9,11 @@ from pea import Pea
 
 
 class Peashooter(Plant):
-    def __init__(self, collision_group, projectile_group, overlay_group, interact=True, pos_x = 0, pos_y = 0):
-        super().__init__('Peashooter', collision_group)
+    def __init__(self, collision_group, shadow_group, projectile_group, overlay_group, interact=True, pos_x = 0, pos_y = 0):
+        super().__init__('Peashooter', collision_group, shadow_group)
         
         self.group = collision_group
+        self.shadow_group = shadow_group
         self.pea_group = projectile_group
         self.interact = interact
 
@@ -45,6 +46,7 @@ class Peashooter(Plant):
 
         self.resize_rect(pos_x, pos_y)
         self.resize_all_sprites()
+        self.setup_shadow()
 
         self.view_box = self.rect
         self.view_box = self.view_box.inflate(0, -50)

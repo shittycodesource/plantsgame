@@ -1,0 +1,11 @@
+{
+    "Pea": {
+        "damage": 45,
+        "speed": 150,
+        "width": 24,
+        "height": 24,
+        "images": [
+            "Pea.png"
+        ]
+    }
+}

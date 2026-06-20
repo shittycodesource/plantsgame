@@ -7,7 +7,14 @@
             "Peashooter/1.png",
             "Peashooter/2.png",
             "Peashooter/3.png"
-        ]
+        ],
+        "shadow": {
+            "path": "Peashooter_shadow.png",
+            "offset_x": -5,
+            "offset_y": 0,
+            "width_extend": 10,
+            "height_extend": 10
+        }
     },
     "Sunbloom": {
         "health": 100,
@@ -16,7 +23,14 @@
             "Sunbloom/1.png",
             "Sunbloom/2.png",
             "Sunbloom/3.png"
-        ]
+        ],
+        "shadow": {
+            "path": "Sunbloom_shadow.png",
+            "offset_x": 0,
+            "offset_y": 5,
+            "width_extend": 0,
+            "height_extend": 0
+        }
     },
     "Wallnut": {
         "health": 1000,
@@ -28,7 +42,14 @@
             "Wallnut/4.png",
             "Wallnut/5.png",
             "Wallnut/6.png",
-            "Wallnut/7.png"
-        ]
+            "Wallnut/7,.png"
+        ],
+        "shadow": {
+            "path": "Wallnut_shadow.png",
+            "offset_x": -5,
+            "offset_y": -16,
+            "width_extend": 10,
+            "height_extend": 10
+        }
     }
 }

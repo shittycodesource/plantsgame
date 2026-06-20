@@ -2,7 +2,7 @@ import pygame
 
 from settings import *
 from globalvariables import *
-from group import SpriteInteractive
+from group import SpriteInteractive, ShadowGroup
 
 from sunbloom import Sunbloom
 from peashooter import Peashooter
@@ -21,6 +21,7 @@ class Board:
         self.board      = [ [0] * width for _ in range(height) ]
         self.rectangles = [ [0] * width for _ in range(height) ]
 
+        self.shadow_group           = ShadowGroup()
         self.zombie_collision_group = SpriteInteractive(level)
         self.projectiles_group      = SpriteInteractive(level) 
         self.overlay_group          = SpriteInteractive(level)
@@ -94,7 +95,11 @@ class Board:
         plant_name = current_dragging[1]
 
         cls = eval(plant_name)
-        cls(self.zombie_collision_group, self.projectiles_group, self.overlay_group, True, rect.x, rect.y)
+        cls(
+            self.zombie_collision_group, 
+            self.shadow_group,
+            self.projectiles_group, 
+            self.overlay_group, True, rect.x, rect.y)
 
         self.board[row][column] = current_dragging[1] # set name of the plant
         self.showcase_image = None
@@ -127,6 +132,7 @@ class Board:
         if self.showcase_image != None and self.showcase_image_rect != None:
             self.display_surface.blit(self.showcase_image, self.showcase_image_rect)
 
+        self.shadow_group.draw()
         self.zombie_collision_group.draw()
 
 
