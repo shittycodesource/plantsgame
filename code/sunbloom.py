@@ -8,17 +8,17 @@ from plant import Plant
 from sun import *
 
 class Sunbloom(Plant):
-    def __init__(self, collidable_group, not_colliadble_group, interact=True, pos_x=0, pos_y=0):
-        super().__init__('Sunbloom', collidable_group)
+    def __init__(self, collision_group, projectile_group, overlay_group, interact=True, pos_x=0, pos_y=0):
+        super().__init__('Sunbloom', collision_group)
 
-        self.group = collidable_group
-        self.sun_group = not_colliadble_group
+        self.group = collision_group
+        self.sun_group = overlay_group
         self.interact = interact
 
         self.start_time = time.time()
         self.update_time = 0.0
-        # self.reset_interval = uniform(15.0, 24.0)
-        self.reset_interval = 3.0
+        self.reset_interval = uniform(15.0, 24.0)
+        # self.reset_interval = 3.0
 
         self.frames_per_second = 3
         self.frame_start_time = time.time()
@@ -72,7 +72,7 @@ class Sunbloom(Plant):
     def on_click(self, pos):
         pass
 
-    def update(self):
+    def update(self, level):
         self.frame_update_time = time.time()
         self.update_time = time.time()
 

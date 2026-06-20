@@ -54,8 +54,17 @@ class Sun(pygame.sprite.Sprite):
             self.kill()            
 
 
-    def update(self):
+    def update(self, level):
         self.size()
+
+        # Self destruct if sunbloom get's eaten and doesnt handle remove
+        self.update_time = time.time()
+        if self.update_time - self.start_time >= 10.0:
+            self.kill()
+
+    def draw_debug_boxes(self):
+        pygame.draw.rect(pygame.display.get_surface(), 'Black', self.hitbox, 2)
+
 
 # def move(pos, speed, points):
 #     direction = pygame.math.Vector2(points[0]) - pos

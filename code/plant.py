@@ -30,6 +30,8 @@ class Plant(pygame.sprite.Sprite):
 
         self.current_sprite = 0
         self.image = self.sprites[self.current_sprite]
+        self.rect.width = self.width
+        self.rect.height = self.height
 
 
     def damage(self, amount):
@@ -40,4 +42,10 @@ class Plant(pygame.sprite.Sprite):
             return True
 
     def on_click(self, pos):
+        pass
+
+    def update(self, level):
+        pass
+
+    def draw_debug_boxes(self):
         pass

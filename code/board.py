@@ -21,8 +21,9 @@ class Board:
         self.board      = [ [0] * width for _ in range(height) ]
         self.rectangles = [ [0] * width for _ in range(height) ]
 
-        self.zombie_collision_group    = SpriteInteractive(level)
-        self.zombie_no_collision_group = SpriteInteractive(level)
+        self.zombie_collision_group = SpriteInteractive(level)
+        self.projectiles_group      = SpriteInteractive(level) 
+        self.overlay_group          = SpriteInteractive(level)
 
         self.cell_size = BOARD_CELL_SIZE
 
@@ -73,7 +74,7 @@ class Board:
 
     def on_click(self, pos, current_dragging=None):
         self.zombie_collision_group.on_click(pos)
-        self.zombie_no_collision_group.on_click(pos)
+        self.overlay_group.on_click(pos)
 
         if current_dragging != None:
             mouse_x, mouse_y = pos
@@ -93,7 +94,7 @@ class Board:
         plant_name = current_dragging[1]
 
         cls = eval(plant_name)
-        cls(self.zombie_collision_group, self.zombie_no_collision_group, True, rect.x, rect.y)
+        cls(self.zombie_collision_group, self.projectiles_group, self.overlay_group, True, rect.x, rect.y)
 
         self.board[row][column] = current_dragging[1] # set name of the plant
         self.showcase_image = None
@@ -102,9 +103,12 @@ class Board:
         self.level.balance -= self.get_plant_cost(current_dragging[1])
 
 
-    def update(self):
-        self.zombie_collision_group.update()
-        self.zombie_no_collision_group.update()
+    def update(self, level):
+        self.zombie_collision_group.update(level)
+        self.projectiles_group.update(level)
+        self.overlay_group.update(level)
+
+        # print("board update, zombies len:", len(level.zombies))
 
 
     def render(self):
@@ -117,6 +121,7 @@ class Board:
                 rect = pygame.Rect(posX, posY, self.cell_size, self.cell_size)
                 self.rectangles[j][i] = rect
 
+                # render cell border
                 # pygame.draw.rect(self.display_surface, 'Black', rect, 2)
 
         if self.showcase_image != None and self.showcase_image_rect != None:
@@ -126,4 +131,5 @@ class Board:
 
 
     def render_overlay(self):
-        self.zombie_no_collision_group.draw()
+        self.projectiles_group.draw()
+        self.overlay_group.draw()

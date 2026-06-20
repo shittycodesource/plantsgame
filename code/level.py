@@ -34,7 +34,7 @@ class Level:
         self.visual_group = SpriteInteractive(self) # some interactive sprites in background
 
 
-        self.board = Board(8, 5, self)
+        self.board = Board(9, 5, self)
         self.seeds_bank = SeedsBank(self)
 
         self.background = pygame.image.load('../assets/lawn.png').convert_alpha()
@@ -144,9 +144,10 @@ class Level:
 
 
     def update(self, pos):
-        self.visual_group.update()
+        # self.visual_group.update()
         
-        self.board.update()
+        self.board.update(self)
+        
         self.zombies.update(pos, self.board)
         
         self.seeds_bank.update()
@@ -158,11 +159,12 @@ class Level:
         self.display_surface.blit(self.background, self.background_rect)
         
         self.board.render()
+        
         self.zombies.draw()
 
         self.board.render_overlay()
 
-        self.visual_group.draw()
+        # self.visual_group.draw()
         
         self.seeds_bank.render()
 

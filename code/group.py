@@ -8,6 +8,8 @@ class YSortCameraGroup(pygame.sprite.Group):
     def draw(self):
         for sprite in sorted(self.sprites(), key = lambda sprite: sprite.hitbox.centery):
             self.display_surface.blit(sprite.image, sprite.rect)
+            # sprite.draw_view_box()
+            # sprite.draw_debug_boxes()
 
 class SpriteInteractive(YSortCameraGroup):
     def __init__(self, level):
@@ -18,9 +20,9 @@ class SpriteInteractive(YSortCameraGroup):
         for sprite in self.sprites():
             sprite.on_click(pos)
 
-    def update(self):
+    def update(self, level):
         for sprite in self.sprites():
-            sprite.update()
+            sprite.update(level)
 
     # def draw(self):
     #     for sprite in self.sprites():

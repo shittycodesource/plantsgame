@@ -11,6 +11,7 @@ class Walker(pygame.sprite.Sprite):
 
         self.data = globalvariables.global_zombie_data[zombie_type]
         self.speed = self.data['speed']
+        self.health = self.data['health']
         self.wave_id = wave_id
 
         self.width = ZOMBIE_WIDTH
@@ -38,6 +39,8 @@ class Walker(pygame.sprite.Sprite):
         self.start_time = time.time()
         self.update_time = 0.0
         self.attack_interval = uniform(1.0, 2.0)
+
+        self.type = 'Zombie'
     
 
     def setup_hitbox(self):
@@ -91,31 +94,36 @@ class Walker(pygame.sprite.Sprite):
         dummy_sprite = pygame.sprite.Sprite()
         dummy_sprite.rect = self.hitbox
 
-        collided_sprite = pygame.sprite.spritecollideany(dummy_sprite, board.zombie_collision_group)
-
-        if collided_sprite:
-            self.speed = 0
-            # print(f'collided: {collided_sprite.rect.y} {collided_sprite.rect.height} {int(self.hitbox.y)}')
-           
-            column, row = board.get_cell_indexes(collided_sprite.rect.topleft)
-            # pygame.draw.rect(self.display_surface, (255, 0, 0), (collided_sprite.rect.x, collided_sprite.rect.y, 50, 50))
-            # 592, 172
+        # Check board collisions
+        board_collided_sprite = pygame.sprite.spritecollideany(dummy_sprite, board.zombie_collision_group)
+        if board_collided_sprite:
+            column, row = board.get_cell_indexes(board_collided_sprite.rect.topleft)
             if column != None and row != None:
-                self.attack(pos, board, column, row, collided_sprite)
+                self.speed = 0
+                self.attack(pos, board, column, row, board_collided_sprite)
             else:
-                print("WHAT THE FUCk????", collided_sprite.rect.topleft, column, row) # this should not happen at all
-                # if it happened it is certified what the fuck moment
-
-                pygame.draw
+                print("What the fuck?")
         else:
             if self.current_sprite != 3 and self.current_sprite != 7 and self.current_sprite != 0:
                 self.speed = self.data['speed']
 
+        # Check projectile collisions
+        projectile_sprite = pygame.sprite.spritecollideany(dummy_sprite, board.projectiles_group)
+        if (projectile_sprite):
+            self.take_damage(projectile_sprite.damage)
+            projectile_sprite.kill()
+        
         dummy_sprite.kill()
 
 
     def take_damage(self, damage):
-        pass
+        print("Zombie damaged", damage)
+        
+        if self.health - damage > 0:
+            self.health -= damage
+        else:
+            print("Zombie defeated")
+            self.kill()
 
 
     def attack(self, pos, board, column, row, collided_sprite):
@@ -145,7 +153,7 @@ class Walker(pygame.sprite.Sprite):
         pygame.draw.rect(self.display_surface, 'Black', self.hitbox, 2)
 
 
-    def update(self):
+    def update(self, level):
         self.walk()
         self.animate()        
 
@@ -153,6 +161,8 @@ class Walker(pygame.sprite.Sprite):
     def on_click(self, pos):
         pass
 
+    def draw_debug_boxes(self):
+        self.render_hitbox()
 
 class Zombie(Walker):
     def __init__(self, zombie_type, lane, wave_id, group, pos_x = 0, pos_y = 0):
