@@ -1,14 +1,16 @@
 import pygame
 import time
-from random import uniform, randint
 import globalvariables
+
+from random import uniform, randint
 from settings import *
 
 class Walker(pygame.sprite.Sprite):
-    def __init__(self, zombie_type, lane, wave_id, group, pos_x = 0, pos_y = 0):
+    def __init__(self, zombie_type, lane, wave_id, group, pos_x = 0, pos_y = 0, level_ref = 0):
         super().__init__(group)
         self.display_surface = pygame.display.get_surface()
 
+        self.level_ref = level_ref
         self.data = globalvariables.global_zombie_data[zombie_type]
         self.speed = self.data['speed']
         self.health = self.data['health']
@@ -72,6 +74,9 @@ class Walker(pygame.sprite.Sprite):
         self.rect.x = int(self.float_pos_x)
         self.hitbox.x = int(self.float_pos_x) + self.hitbox_offset
 
+        # if self.hitbox.x < -60:
+            # print("you loose")
+
 
     def animate(self):
         self.frame_update_time = time.time()
@@ -121,9 +126,12 @@ class Walker(pygame.sprite.Sprite):
         
         if self.health - damage > 0:
             self.health -= damage
+            self.level_ref.add_damage(damage)
         else:
             print("Zombie defeated")
+            globalvariables.score += 450
             self.kill()
+            self.level_ref.add_damage(self.health)
 
 
     def attack(self, pos, board, column, row, collided_sprite):
@@ -165,8 +173,8 @@ class Walker(pygame.sprite.Sprite):
         self.render_hitbox()
 
 class Zombie(Walker):
-    def __init__(self, zombie_type, lane, wave_id, group, pos_x = 0, pos_y = 0):
-        super().__init__('Basic', lane, wave_id, group, pos_x, pos_y)
+    def __init__(self, zombie_type, lane, wave_id, group, pos_x = 0, pos_y = 0, level_ref = 0):
+        super().__init__('Basic', lane, wave_id, group, pos_x, pos_y, level_ref)
 
         self.sprites = [
             pygame.image.load(f'../assets/Zombie/1.png').convert_alpha(),

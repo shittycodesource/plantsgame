@@ -1,4 +1,5 @@
 import pygame
+import globalvariables
 
 from settings import *
 from globalvariables import *
@@ -106,6 +107,10 @@ class Board:
         self.showcase_image_rect = None
 
         self.level.balance -= self.get_plant_cost(current_dragging[1])
+        sound = pygame.mixer.Sound("../assets/plant.mp3")
+        sound.set_volume(0.2)
+        sound.play() 
+        globalvariables.score += 50
 
 
     def update(self, level):

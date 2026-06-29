@@ -60,11 +60,12 @@ class Projectile(pygame.sprite.Sprite):
 
     def move(self):
         dt = globalvariables.dt        
-        self.float_pos_x += (self.speed * dt)
-
-        self.rect.x   = int(self.float_pos_x)
-        self.hitbox.x = int(self.float_pos_x) + self.hitbox_offset
-        self.rect.y   = int(self.float_pos_y)
+        # print('pea', dt)
+        if (dt):
+            self.float_pos_x += (self.speed * dt)
+            self.rect.x   = int(self.float_pos_x)
+            self.hitbox.x = int(self.float_pos_x) + self.hitbox_offset
+            self.rect.y   = int(self.float_pos_y)
 
     def on_click(self, pos):
         pass

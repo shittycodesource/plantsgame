@@ -1,0 +1,23 @@
+{
+    "start_sun": 9999,
+    "is_night": false,
+    "is_fog": false,
+    "background": "lawn.png",
+    "music": "usual.ogg",
+    "tip": "Collect sun and place new plants",
+    "unlocks": {
+        "level": 2,
+        "plant": 3
+    },
+    "custom_select_plants": true,
+    "available_plants": [ "Peashooter" ],
+    "wave_count": 1,
+    "waves": [
+        {
+            "wave_num": 1,
+            "zombies": [ "Basic" ],
+            "has_flag": false,
+            "is_final": false
+        }
+    ]
+}

@@ -1,5 +1,6 @@
 import pygame
 import time
+import globalvariables
 from random import uniform, randint
 
 from globalvariables import *
@@ -79,8 +80,11 @@ class Peashooter(Plant):
         self.frame_update_time = time.time()
         self.update_time = time.time()
 
-        frame_delta = self.frame_update_time - self.frame_start_time
-        delta_time = self.update_time - self.start_time
+
+        frame_delta = (self.frame_update_time - self.frame_start_time) - globalvariables.pause_time_delta
+        delta_time = (self.update_time - self.start_time) - globalvariables.pause_time_delta
+        
+        # print("[Peashooter] ", delta_time)
 
         if self.current_sprite == 0 and delta_time >= 1.0:
             self.start_time = time.time()

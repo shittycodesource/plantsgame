@@ -1,4 +1,6 @@
 import pygame
+import globalvariables
+
 from globalvariables import * # import global_plants_data
 from settings import * # import constants
 
