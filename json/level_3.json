@@ -1,5 +1,5 @@
 {
-    "start_sun": 25,
+    "start_sun": 99999,
     "is_night": false,
     "is_fog": false,
     "background": "lawn.png",
@@ -11,7 +11,7 @@
     },
     "custom_select_plants": true,
     "available_plants": [ "Peashooter" ],
-    "wave_count": 9,
+    "wave_count": 8,
     "waves": [
         {
             "wave_num": 1,
@@ -59,7 +59,7 @@
             "wave_num": 8,
             "zombies": [ "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic", "Basic" ],
             "has_flag": true,
-            "is_final": false
+            "is_final": true
         }
     ]
 }
