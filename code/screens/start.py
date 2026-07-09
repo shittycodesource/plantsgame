@@ -7,6 +7,7 @@ class Start:
     def __init__(self, screen, game_state_manager, score):
         self.game_state_manager = game_state_manager
         self.score = score
+        self.score_value = self.score.read_score()
 
         self.display_surface = screen
         self.image = pygame.image.load('../assets/menu.png').convert()
@@ -28,6 +29,7 @@ class Start:
         self.font = pygame.font.Font('../assets/Tiny5.ttf', 40)
 
 
+
     def check_hovers(self, pos):
         pygame.mouse.set_cursor(pygame.SYSTEM_CURSOR_ARROW)
         for btn in self.button_classes:
@@ -42,6 +44,7 @@ class Start:
         for btn in self.button_classes:
             btn.on_click(event.pos)
 
+
     def handle_keydown_events(self, event):
         if event.key == pygame.K_SPACE:
             self.game_state_manager.set_state('level')
@@ -51,12 +54,13 @@ class Start:
         for btn in self.button_classes:
             btn.render()
 
+
     def render_score(self):
-        score = self.score.read_score()
-        text = self.font.render(f"Best score: {score}", True, (255, 255, 255))
+        text = self.font.render(f"Best score: {self.score_value}", True, (255, 255, 255))
         text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 40))
 
         self.display_surface.blit(text, text_rect)
+
 
     def run(self):
         self.check_hovers(pygame.mouse.get_pos())

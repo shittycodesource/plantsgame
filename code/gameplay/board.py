@@ -5,6 +5,10 @@ from settings.const import BOARD_CELL_SIZE, BOARD_OFFSET_LEFT, BOARD_OFFSET_TOP
 
 from groups.groups import SpriteInteractive, ShadowGroup
 
+from plants.sunbloom import Sunbloom
+from plants.peashooter import Peashooter
+from plants.wallnut import Wallnut, Susnut, Sus
+
 class Board:
     def __init__(self, width: int, height: int, level=None, main=None):
         self.display_surface = pygame.display.get_surface()

@@ -2,13 +2,11 @@ import pygame, time
 from utils.jsondata import *
 
 from settings.const import SEEDS_BANK_WIDTH, SEEDS_BANK_OFFSET_TOP, SEEDS_BANK_OFFSET_LEFT, SEEDS_BANK_HEIGHT, SEED_CARD_WIDTH, SEED_CARD_HEIGHT, SEEDS_CARDS_LEFT_OFFSET
+from settings.paths import FONT_PATH
 
 from plants.sunbloom import Sunbloom
 from plants.peashooter import Peashooter
 from plants.wallnut import Wallnut, Susnut, Sus
-
-balance_font = pygame.font.Font('../assets/Tiny5.ttf', 40)
-price_card_font = pygame.font.Font('../assets/Tiny5.ttf', 30)
 
 class SeedsBank:
 
@@ -19,6 +17,7 @@ class SeedsBank:
 
         self.seeds = level.seeds
         self.balance = level.balance
+        self.balance_font = pygame.font.Font(FONT_PATH, 40)
 
         self.spriteWidth = SEEDS_BANK_WIDTH
         self.spriteHeight = SEEDS_BANK_HEIGHT
@@ -35,6 +34,7 @@ class SeedsBank:
         self.cards_offset = SEEDS_CARDS_LEFT_OFFSET 
         self.card_height = SEED_CARD_HEIGHT
         self.card_width = SEED_CARD_WIDTH
+        self.card_font = pygame.font.Font(FONT_PATH, 30)
 
         self.card_half_height = self.card_height // 2
         self.card_half_width = self.card_width // 2
@@ -159,7 +159,7 @@ class SeedsBank:
         target_rect = pygame.Rect(26, 120, 112, 34)
         # pygame.draw.rect(self.display_surface, 'Black', target_rect, 1)
 
-        text_surf = balance_font.render(str(self.get_balance()), True, (117, 85, 29))
+        text_surf = self.balance_font.render(str(self.get_balance()), True, (117, 85, 29))
         text_rect = text_surf.get_rect(center=target_rect.center)
         # pygame.draw.rect(self.display_surface, 'Gray', text_rect, 1)
 
@@ -190,7 +190,7 @@ class SeedsBank:
 
             # Cost
             target_rect = pygame.Rect(image_rect.x, image_rect.y + 42, 66, 26)
-            text_surf = price_card_font.render(str(self.get_plant_cost(seed)), True, (152, 138, 102) if is_affordable else (71, 66, 54))
+            text_surf = self.card_font.render(str(self.get_plant_cost(seed)), True, (152, 138, 102) if is_affordable else (71, 66, 54))
             text_rect = text_surf.get_rect(center=target_rect.center)
             self.display_surface.blit(text_surf, text_rect)
 

@@ -15,7 +15,7 @@ class Pause:
         self.window_rect.center = self.display_surface.get_rect().center
 
         self.buttons = [ { "state": "start", "name": "exit", "id": 0 }, { "state": 0, "name": "continue", "id": 1 } ] 
-        self.button_surfs = [ pygame.transform.scale(pygame.image.load(f'../assets/paused-{btn['name']}.png').convert_alpha(), (161*2, 48*2)) for btn in self.buttons ]
+        self.button_surfs = [ pygame.transform.scale(pygame.image.load(f"../assets/paused-{btn['name']}.png").convert_alpha(), (161*2, 48*2)) for btn in self.buttons ]
         self.button_rects = [ btn.get_rect() for btn in self.button_surfs ]
 
         self.button_rects[0].center = self.display_surface.get_rect().center

@@ -1,6 +1,7 @@
 import pygame, json
 from random import uniform, choices, randint
 import time 
+
 import numpy as np
 
 from settings.const import SCREEN_WIDTH, BOARD_OFFSET_TOP, BOARD_CELL_SIZE, ZOMBIE_TOP_OVERLAP, SHOW_LEVEL_LOAD_DATA, SHOW_ZOMBIE_DATA

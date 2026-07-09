@@ -1,3 +1,4 @@
+import pygame
 from zombies.walker import Walker
 
 class Zombie(Walker):
