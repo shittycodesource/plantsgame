@@ -10,21 +10,15 @@ from projectiles.pea import Pea
 
 
 class Peashooter(Plant):
-    def __init__(self, collision_group, shadow_group, projectile_group, overlay_group, interact=True, pos_x = 0, pos_y = 0):
-        super().__init__('Peashooter', collision_group, shadow_group, interact)
+    def __init__(self, collision_group, shadow_group, projectile_group, overlay_group, interact=True, defeat_callback=None, pos_x = 0, pos_y = 0):
+        super().__init__('Peashooter', collision_group, shadow_group, interact, defeat_callback)
         
         self.group = collision_group
         self.shadow_group = shadow_group
         self.pea_group = projectile_group
         self.interact = interact
 
-        self.start_time = time.time()
-        self.update_time = 0.0
-        self.shoot_interval = uniform(1.3, 1.5)
-
-        self.frames_per_second = 2
-        self.frame_start_time = time.time()
-        self.frame_update_time = 0
+        self.time_interval_mark = uniform(1.3, 1.5)
 
         self.sprites = [
             # Plain
@@ -32,26 +26,16 @@ class Peashooter(Plant):
             pygame.image.load(f'../assets/Peashooter/2.png').convert_alpha(),
             pygame.image.load(f'../assets/Peashooter/3.png').convert_alpha(),
         ]
-        self.sprites_orders = {
-            "Plain":   [ 0, 1, 2, 1 ]
-        }
-        self.current_state = "Plain"
-        self.sprites_order = self.sprites_orders[self.current_state]
 
-        self.current_sprite = 0
-        self.image = self.sprites[self.current_sprite]
-        self.rect = self.image.get_rect()
+        self.sprites_orders = { "Plain":   [ 0, 1, 2, 1 ] }
+        self.frames_per_second = 2
 
-        self.view_box = None
-        self.is_seeing_zombies = False
-
-        self.resize_rect(pos_x, pos_y)
-        self.resize_all_sprites()
-        self.setup_shadow()
+        self.setup(pos_x, pos_y)
 
         self.view_box = self.rect
         self.view_box = self.view_box.inflate(0, -50)
         self.view_box.width = BOARD_CELL_SIZE * 9
+        self.is_seeing_zombies = False
 
 
     def check_view(self, zombies):
@@ -71,37 +55,17 @@ class Peashooter(Plant):
                 
                 pea = Pea(self.pea_group, self.shadow_group, pos_x, pos_y)
 
+    def time_event(self):
+        self.shoot()
+        self.time_interval_mark = uniform(1.3, 1.5)
+
 
     def update(self, level, dt):
-        # Viewbox collision
-        self.check_view(level.zombies)
+        self.check_view(level.zombies) # Viewbox collision
+        self.time_handler(dt)
+        self.frame_handler(dt)
 
-        if self.shoot_interval > 0:
-            self.shoot_interval -= dt
-        else:
-            self.shoot_interval = uniform(1.3, 1.5)
-            self.shoot()
-
-        # Shoot and animation
-        # self.frame_update_time = time.time()
-        # self.update_time = time.time()
-
-        # frame_delta = (self.frame_update_time - self.frame_start_time) - globalvariables.pause_time_delta
-        # delta_time = (self.update_time - self.start_time) - globalvariables.pause_time_delta
-        
-        # if self.current_sprite == 0 and delta_time >= 1.0:
-        #     self.start_time = time.time()
-        #     self.update_time = time.time()
-        #     self.shoot()
-
-        # self.current_sprite = int(frame_delta * self.frames_per_second % len(self.sprites_order))
-        # if frame_delta >= len(self.sprites_order):
-        #     self.frame_start_time = time.time()
-        #     self.frame_update_time = time.time()
-
-        # self.image = self.sprites[self.sprites_order[self.current_sprite]]
-
-
+ 
     def draw_view_box(self):
         pygame.draw.rect(pygame.display.get_surface(), 'Black', self.view_box, 2)
 

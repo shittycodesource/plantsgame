@@ -7,7 +7,6 @@ class Start:
     def __init__(self, screen, game_state_manager, score):
         self.game_state_manager = game_state_manager
         self.score = score
-        self.score_value = self.score.read_score()
 
         self.display_surface = screen
         self.image = pygame.image.load('../assets/menu.png').convert()
@@ -56,7 +55,7 @@ class Start:
 
 
     def render_score(self):
-        text = self.font.render(f"Best score: {self.score_value}", True, (255, 255, 255))
+        text = self.font.render(f"Best score: {self.score.read_score()}", True, (255, 255, 255))
         text_rect = text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 40))
 
         self.display_surface.blit(text, text_rect)

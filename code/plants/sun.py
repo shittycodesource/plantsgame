@@ -25,7 +25,7 @@ class Sun(pygame.sprite.Sprite):
 
         self.start_time = time.time()
         self.update_time = 0.0
-        self.interval = 5.0
+        self.interval = 9.0
         self.stop_scaling = False
 
         self.multiplier = 0.001
@@ -55,7 +55,7 @@ class Sun(pygame.sprite.Sprite):
             self.kill()            
 
 
-    def update(self, level):
+    def update(self, level, dt):
         self.size()
 
         # Self destruct if sunbloom get's eaten and doesnt handle remove

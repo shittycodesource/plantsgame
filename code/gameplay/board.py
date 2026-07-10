@@ -10,10 +10,12 @@ from plants.peashooter import Peashooter
 from plants.wallnut import Wallnut, Susnut, Sus
 
 class Board:
-    def __init__(self, width: int, height: int, level=None, main=None):
+    def __init__(self, width: int, height: int, level=None, main=None, score=None):
         self.display_surface = pygame.display.get_surface()
+        
         self.level = level
         self.main = main
+        self.score = score
 
         self.width = width
         self.height = height
@@ -88,21 +90,32 @@ class Board:
 
     # SPAWNING AND INITIALIZING NEW CLASSES HERE
     def place_plant(self, column, row, current_dragging):
+
+        global global_plants_data
+
         rect = self.get_plant_rect(row, column)
         plant_name = current_dragging[1]
+
+        defeat_callback = lambda ref: self.score.decrease( global_plants_data[plant_name]["score"]["defeat"] )
 
         cls = eval(plant_name)
         cls(
             self.zombie_collision_group, 
             self.shadow_group,
             self.projectiles_group, 
-            self.overlay_group, True, rect.x, rect.y)
+            self.overlay_group,
+            True, # interact 
+            defeat_callback=defeat_callback, # defeat callback
+            pos_x=rect.x, pos_y=rect.y
+        )
 
         self.board[row][column] = current_dragging[1] # set name of the plant
         self.showcase_image = None
         self.showcase_image_rect = None
 
         self.level.balance -= self.get_plant_cost(current_dragging[1])
+
+        self.score.increase( global_plants_data[plant_name]["score"]["place"] )
         
         # sound = pygame.mixer.Sound("../assets/plant.mp3")
         # sound.set_volume(0.2)

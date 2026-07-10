@@ -131,6 +131,7 @@ class Walker(pygame.sprite.Sprite):
             # globalvariables.score += 450
             self.kill()
             self.level_ref.add_damage(self.health)
+            self.level_ref.score.increase(150)
 
 
     def attack(self, pos, board, column, row, collided_sprite):
@@ -153,7 +154,7 @@ class Walker(pygame.sprite.Sprite):
                 self.started_attacking = False
                 board.board[row][column] = 0
                 board.rectangles[row][column] = 0
-                collided_sprite.kill()
+                collided_sprite.defeat()
 
 
     def render_hitbox(self):

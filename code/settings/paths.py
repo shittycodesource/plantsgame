@@ -30,4 +30,4 @@ def write_txt(path, content):
     file_path = f"{ROOT_DIR}{path}"
     # print("paths.py read_txt", file_path)
     with open(file_path, "w", encoding="utf-8") as file:
-        file.write(content)
+        file.write(str(content))

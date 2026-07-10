@@ -6,6 +6,7 @@ class Won:
         self.display_surface = screen
         
         self.game_state_manager = game_state_manager
+        self.score = score
         
         self.image = pygame.image.load('../assets/won.png').convert()
         self.image = pygame.transform.scale(self.image, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -14,17 +15,9 @@ class Won:
 
     def handle_keydown_events(self, event):
         if event.key == pygame.K_SPACE:
-            # number = 0
-            # with open('../local/level.txt', 'r') as file:
-            #     number = int(file.readline())
-
-            # with open('../local/level.txt', 'w') as file:
-            #     file.write(str(number + 1))
             
-            # with open('../local/score.txt', 'w') as file:
-            #     file.write(str(globalvariables.score))
-
-            # print('update lvl', number + 1)
+            print("Saving current score", self.score.get_score())
+            self.score.write_score()
 
             self.game_state_manager.set_state('level')
 

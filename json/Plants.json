@@ -14,6 +14,10 @@
             "offset_y": 0,
             "width_extend": 10,
             "height_extend": 10
+        },
+        "score": {
+            "defeat": 50,
+            "place": 25
         }
     },
     "Sunbloom": {
@@ -30,6 +34,10 @@
             "offset_y": 5,
             "width_extend": 0,
             "height_extend": 0
+        },
+        "score": {
+            "defeat": 40,
+            "place": 15
         }
     },
     "Wallnut": {
@@ -50,6 +58,10 @@
             "offset_y": -16,
             "width_extend": 10,
             "height_extend": 10
+        },
+        "score": {
+            "defeat": 5,
+            "place": 15
         }
     },
     "Susnut": {
@@ -64,10 +76,14 @@
             "offset_y": -16,
             "width_extend": 10,
             "height_extend": 10
+        },
+        "score": {
+            "defeat": 0,
+            "place": 10
         }
     },
     "Sus": {
-        "health": 150,
+        "health": 1500,
         "cost": 2000,
         "images": [
             "Sus.png"
@@ -78,6 +94,10 @@
             "offset_y": -4,
             "width_extend": 10,
             "height_extend": 10
+        },
+        "score": {
+            "defeat": 500,
+            "place": 750
         }
     }
 }

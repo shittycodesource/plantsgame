@@ -1,5 +1,5 @@
 {
-    "start_sun": 50,
+    "start_sun": 500000,
     "is_night": false,
     "is_fog": false,
     "background": "lawn.png",

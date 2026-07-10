@@ -43,8 +43,8 @@ class SeedsBank:
             "Sunbloom":   pygame.image.load('../assets/cards/Sunbloom.png').convert_alpha(),
             "Peashooter": pygame.image.load('../assets/cards/Peashooter.png').convert_alpha(),
             "Wallnut":    pygame.image.load('../assets/cards/Wallnut.png').convert_alpha(),
-            "Susnut":    pygame.image.load('../assets/cards/Susnut.png').convert_alpha(),
-            "Sus":    pygame.image.load('../assets/cards/Sus.png').convert_alpha()
+            # "Susnut":    pygame.image.load('../assets/cards/Susnut.png').convert_alpha(),
+            # "Sus":    pygame.image.load('../assets/cards/Sus.png').convert_alpha()
         }
 
         self.cards_rectangles = [ None for i in range(len(self.cards_sprites)) ]
@@ -113,7 +113,7 @@ class SeedsBank:
             self.drag_pos_y = rectangle.y + self.card_half_height
 
             cls = eval(plant)
-            self.dragging_class = cls(self.dragging_group, [], [], [], interact=False)
+            self.dragging_class = cls(self.dragging_group, [], [], [], interact=False, defeat_callback=None)
             self.current_dragging = (index, plant, rectangle, self.dragging_class)
         # else:
         #     self.jiggle_animation(index)

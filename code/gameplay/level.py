@@ -23,6 +23,7 @@ class Level:
     def __init__(self, screen, game_state_manager, score, level_number, main_ref):
         self.display_surface = screen
         self.level_number = level_number
+
         self.main_ref = main_ref
         self.game_state_manager = game_state_manager
         self.score = score
@@ -36,7 +37,7 @@ class Level:
         self.zombies = ZombiesGroup(self, self.main_ref)
         self.visual_group = SpriteInteractive(self, self.main_ref)
 
-        self.board = Board(9, 5, self, self.main_ref)
+        self.board = Board(9, 5, self, self.main_ref, self.score)
         self.seeds_bank = SeedsBank(self)
         self.wavebar = WaveBar(self.display_surface, self)
 
@@ -84,7 +85,8 @@ class Level:
             return loaded['available_plants']
         else:
             # Make custom selection
-            return [ "Sunbloom", "Peashooter", "Wallnut", "Susnut", "Sus" ]
+            # return [ "Sunbloom", "Peashooter", "Wallnut", "Susnut", "Sus" ]
+            return [ "Sunbloom", "Peashooter", "Wallnut" ]
 
 
     def calculate_waves_health(self):
@@ -178,6 +180,7 @@ class Level:
 
             self.wavebar.update(self.zombies_took_damage / self.wave_damage_to_finish * 100)
 
+            # FInishing level
             if ((self.zombies_took_damage / self.wave_damage_to_finish * 100) == 100):
                 self.game_state_manager.set_state('won')
 
@@ -198,6 +201,11 @@ class Level:
         self.wavebar.render()
 
         debug(f'Level Data: ')
+        debug(f'Score: {self.score.get_score()}', 30)
+
+
+
+        
         if (SHOW_LEVEL_LOAD_DATA):  
             for i, item in enumerate(self.loaded):
                 if item == 'available_plants':

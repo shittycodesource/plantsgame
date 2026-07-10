@@ -12,16 +12,18 @@ class Score:
 
 
     def nullify(self):
-        self.value = nullify
+        self.value = 0
 
 
     def increase(self, n):
         self.value += n
+        print("score increase")
 
 
     def decrease(self, n):
         if (self.value - n >= 0):
             self.value -= n
+            print("score decrease")
 
 
     def get_score(self):
