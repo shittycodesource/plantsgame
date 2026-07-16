@@ -3,6 +3,7 @@
         "health": 100,
         "shoots": true,
         "cost": 100,
+        "cooldown": 6,
         "images": [
             "Peashooter/1.png",
             "Peashooter/2.png",
@@ -23,6 +24,7 @@
     "Sunbloom": {
         "health": 100,
         "cost": 25,
+        "cooldown": 7.5,
         "images": [
             "Sunbloom/1.png",
             "Sunbloom/2.png",
@@ -43,6 +45,7 @@
     "Wallnut": {
         "health": 1000,
         "cost": 50,
+        "cooldown": 30,
         "images": [
             "Wallnut/1.png",
             "Wallnut/2.png",
@@ -67,6 +70,7 @@
     "Susnut": {
         "health": 250,
         "cost": 25,
+        "cooldown": 30,
         "images": [
             "Susnut.png"
         ],
@@ -85,6 +89,7 @@
     "Sus": {
         "health": 1500,
         "cost": 2000,
+        "cooldown": 30,
         "images": [
             "Sus.png"
         ],

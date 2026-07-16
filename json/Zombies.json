@@ -2,7 +2,7 @@
     "Basic": {
         "health": 270,
         "weight": 4000,
-        "speed": 60,
+        "speed": 15,
         "can_change_lane": false,
         "images": [
             "Zombie/1.png",
