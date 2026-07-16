@@ -58,7 +58,17 @@ class SeedsBank:
         self.current_dragging = None # Tuple (cardIndex, plantName, rectangle, class)
         self.dragging_class = None
         self.dragging_group = pygame.sprite.Group()
+
+        self.cooldown_shit   = [ None for i in range(len(self.cards_sprites)) ]
+        self.cooldown_timers = [ 0 for i in range(len(self.cards_sprites)) ]
+        self.cooldown_mask = pygame.image.load('../assets/cards/Sunbloom.png').convert_alpha()
             
+
+    def resize_card_sprites(self):
+        for card in self.cards_sprites: 
+            image = self.cards_sprites[card]
+            image = pygame.transform.scale(image, (self.card_width, self.card_height))
+            self.cards_sprites[card] = image
 
     def get_balance(self):
         self.balance = self.level_ref.balance
@@ -100,7 +110,7 @@ class SeedsBank:
 
 
     def drag_plant(self, index, plant, pos):
-        if self.is_plant_affordable(plant):
+        if self.is_plant_affordable(plant) and self.cooldown_shit[index] == None:
             self.stop_dragging()
 
             rectangle = self.cards_rectangles[index]
@@ -133,18 +143,73 @@ class SeedsBank:
             self.cards_sprites[self.current_dragging[1]].set_alpha(255)
             self.current_dragging = None
 
+    
+    def start_cooldown(self, index, rectangle, name):
+        surf = pygame.Surface((rectangle.width, 0), pygame.SRCALPHA)
+        surf.fill((0, 0, 0))
+        surf.set_alpha(180)
 
-    def update(self):
+        surf = self.apply_mask(surf)
+
+        pair = [ surf, rectangle, name ] 
+        self.cooldown_shit[index] = pair
+
+
+    def apply_mask(self, target_surface):
+        return target_surface
+        #what the fuck is this
+        colored_mask = pygame.mask.from_surface(self.cooldown_mask)
+        colored_mask.blit(target_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
+        return colored_mask
+
+
+    def render_cooldowns(self):
+        for shit in self.cooldown_shit:
+            if shit != None:
+                
+                surf = shit[0]
+                rect = shit[1]
+
+                self.display_surface.blit(surf, rect)
+
+
+    def update(self, dt):
         self.get_balance()
+        self.update_cooldowns(dt)
 
-        
-    def resize_card_sprites(self):
-        for card in self.cards_sprites: 
-            image = self.cards_sprites[card]
-            image = pygame.transform.scale(image, (self.card_width, self.card_height))
 
-            self.cards_sprites[card] = image
-            
+
+    def update_cooldowns(self, dt):
+        for index, shit in enumerate(self.cooldown_shit):
+            if shit != None:
+                self.cooldown_timers[index] += dt
+
+                if self.cooldown_timers[index] >= 7.5:
+                    self.cooldown_shit[index] = None
+                    self.cooldown_timers[index] = 0
+                    return
+                # fuck this shit i fucking hate this cooldown system its ugly and buggy
+                surf = shit[0]
+                rect = shit[1]
+                name = shit[2]
+
+                global global_plants_data
+                data = global_plants_data[name]
+                
+                new_height = ((self.cooldown_timers[index] / data['cooldown']) * SEED_CARD_HEIGHT) + 1
+                modified_surf = pygame.transform.scale(surf, (rect.width, new_height))
+                # rect.y = rect.y + (SEED_CARD_HEIGHT - new_height)
+
+                rect.y = self.offsetY + 17 + (SEED_CARD_HEIGHT - new_height) + 1
+
+                modified_surf.fill((0, 0, 0))
+                modified_surf.set_alpha(180)
+                
+                modified_surf = self.apply_mask(modified_surf)
+
+
+                self.cooldown_shit[index] = [ modified_surf, rect, name ]
+
 
     def render_drag(self):
         # current_dragging = Tuple[cardIndex, plantName, rectangle]
@@ -179,6 +244,7 @@ class SeedsBank:
             is_affordable = self.is_plant_affordable(seed)
 
             if is_affordable == False: image.set_alpha(80)
+            elif self.cooldown_shit[i] != None: image.set_alpha(120)
             else:                      image.set_alpha(255)
 
             if self.current_dragging != None:
@@ -199,4 +265,5 @@ class SeedsBank:
         self.display_surface.blit(self.background, self.background_rect)
         self.render_seeds_cards()
         self.render_balance()
+        self.render_cooldowns()
         self.render_drag()

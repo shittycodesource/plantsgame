@@ -174,7 +174,7 @@ class Level:
             
             self.zombies.update(pos, self.board, self)
             
-            self.seeds_bank.update()
+            self.seeds_bank.update(self.main_ref.dt)
 
             self.update_wave_timer()
 

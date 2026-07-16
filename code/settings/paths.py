@@ -16,11 +16,8 @@ FONT_PATH = ROOT_DIR + "/assets/Tiny5.ttf"
 
 def read_txt(path):
     file_path = f"{ROOT_DIR}{path}"
-    # print("paths.py read_txt", file_path)
     with open(file_path, "r", encoding="utf-8") as file:
         content = file.read()
-        print(f"Read file {path}")
-
         return content
 
 
@@ -28,6 +25,5 @@ def read_txt(path):
 """Deletes everything inside the file and writes new "content"!! """
 def write_txt(path, content):
     file_path = f"{ROOT_DIR}{path}"
-    # print("paths.py read_txt", file_path)
     with open(file_path, "w", encoding="utf-8") as file:
         file.write(str(content))

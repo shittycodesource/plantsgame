@@ -114,7 +114,7 @@ class Board:
         self.showcase_image_rect = None
 
         self.level.balance -= self.get_plant_cost(current_dragging[1])
-
+        self.level.seeds_bank.start_cooldown(current_dragging[0], current_dragging[2], current_dragging[1])
         self.score.increase( global_plants_data[plant_name]["score"]["place"] )
         
         # sound = pygame.mixer.Sound("../assets/plant.mp3")

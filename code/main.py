@@ -60,7 +60,6 @@ class Game:
         while True:
             self.update_dt()
 
-
             # Handle states
             state = self.game_state_manager.get_state()
 
